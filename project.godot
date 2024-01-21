@@ -11,16 +11,12 @@ config_version=5
 [application]
 
 config/name="MagicJam"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=500
-window/size/viewport_height=500
-window/size/window_width_override=640
-window/size/window_height_override=640
 window/stretch/mode="canvas_items"
 
 [dotnet]
@@ -38,3 +34,5 @@ move={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
