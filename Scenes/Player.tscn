@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=3 uid="uid://ftewu7t36j0f"]
 
 [ext_resource type="Texture2D" uid="uid://brnknbguy448p" path="res://Assets/Frog.png" id="1_2ijiw"]
-[ext_resource type="Script" path="res://Scenes/Player.cs" id="2_eq36h"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="2_eq36h"]
 [ext_resource type="Script" path="res://Scripts/AstarPath.cs" id="3_bxqi4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pw7x7"]
@@ -222,4 +222,3 @@ script = ExtResource("2_eq36h")
 
 [node name="AstarPath" type="Node2D" parent="."]
 script = ExtResource("3_bxqi4")
-VisualizeAstarPath = true

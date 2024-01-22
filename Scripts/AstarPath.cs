@@ -99,7 +99,7 @@ public partial class AstarPath : Node2D
             GD.Print($"Path found with {PathNodeList.Count} points.");
             foreach (var point in PathNodeList)
             {
-                GD.Print($"Path point: {point}");
+                //GD.Print($"Path point: {point}");
             }
             QueueRedraw();  // Request redraw when path is updated
         }

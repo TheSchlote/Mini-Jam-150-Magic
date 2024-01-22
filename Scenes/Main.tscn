@@ -1,6 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://cmuils6xxs81k"]
+[gd_scene load_steps=46 format=3 uid="uid://cmuils6xxs81k"]
 
+[ext_resource type="Script" path="res://Scenes/Main.cs" id="1_3a1o4"]
 [ext_resource type="Texture2D" uid="uid://do0rwfs6gcdc8" path="res://Assets/Set_A2_Interiors.png" id="1_k3nv3"]
+[ext_resource type="PackedScene" uid="uid://bynx0luj8g42h" path="res://Scenes/Enemy.tscn" id="2_anybm"]
 [ext_resource type="Texture2D" uid="uid://brnknbguy448p" path="res://Assets/Frog.png" id="3_bclxs"]
 [ext_resource type="Texture2D" uid="uid://b7556jumpt5lh" path="res://Assets/JordanBug.png" id="4_61vdp"]
 [ext_resource type="PackedScene" uid="uid://ftewu7t36j0f" path="res://Scenes/Player.tscn" id="4_kxdvq"]
@@ -610,7 +612,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_3a1o4")
+enemyScene = ExtResource("2_anybm")
+player = NodePath("Player")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_o5jup")
