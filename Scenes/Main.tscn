@@ -612,10 +612,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("player", "enemy")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("player", "enemies")]
 script = ExtResource("1_fea4j")
 player = NodePath("Player")
-enemy = NodePath("Enemy")
+enemies = [NodePath("Enemy"), NodePath("Enemy2")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_o5jup")
@@ -640,3 +640,6 @@ position = Vector2(24, 24)
 
 [node name="Enemy" parent="." instance=ExtResource("6_r0oys")]
 position = Vector2(1032, 69)
+
+[node name="Enemy2" parent="." instance=ExtResource("6_r0oys")]
+position = Vector2(1032, 360)

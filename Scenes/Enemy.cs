@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Enemy : AnimatedSprite2D
 {
@@ -18,6 +19,11 @@ public partial class Enemy : AnimatedSprite2D
     public void EnemyMove(Vector2I playerPosition)
     {
         isMoving = true;
+
+        // Update non-walkable tiles with the positions of player and other enemies
+        var occupiedPositions = FindOccupiedPositions();
+        AstarPathFind.UpdateNonWalkableTiles(occupiedPositions);
+
         if (AstarPathFind.SetAstarPath(GlobalPosition, playerPosition))
         {
             // Remove the last node to stop one tile before the player
@@ -28,6 +34,7 @@ public partial class Enemy : AnimatedSprite2D
             EnemyPathTarget = 1;
         }
     }
+
 
     private void WalkPath(double delta)
     {
@@ -44,6 +51,10 @@ public partial class Enemy : AnimatedSprite2D
         else
         {
             isMoving = false;
+            if (GetParent() is Main main)
+            {
+                main.NextEnemyTurn(); // Notify Main that this enemy finished moving
+            }
             //Play("Idle");
         }
     }
@@ -55,5 +66,14 @@ public partial class Enemy : AnimatedSprite2D
         {
             WalkPath(delta);
         }
+    }
+    private IEnumerable<Vector2> FindOccupiedPositions()
+    {
+        List<Vector2> occupiedPositions = new List<Vector2>();
+        if (GetParent() is Main main)
+        {
+            occupiedPositions.Add(main.player.GlobalPosition);
+        }
+        return occupiedPositions;
     }
 }

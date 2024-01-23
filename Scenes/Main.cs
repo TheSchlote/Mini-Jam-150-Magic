@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Main : Node2D
 {
@@ -14,7 +15,8 @@ public partial class Main : Node2D
     [Export]
     public Player player;
     [Export]
-    public Enemy enemy;
+    public Enemy[] enemies;
+    private int currentEnemyIndex = 0;
     private GameState currentState;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -36,7 +38,24 @@ public partial class Main : Node2D
         if (currentState == GameState.PlayerAttack)
         {
             currentState = GameState.EnemyMovement;
-            enemy.EnemyMove((Vector2I)player.GlobalPosition);
+            currentEnemyIndex = 0;
+            if (enemies.Length > 0)
+            {
+                enemies[currentEnemyIndex].EnemyMove((Vector2I)player.GlobalPosition);
+            }
+        }
+    }
+    public void NextEnemyTurn()
+    {
+        currentEnemyIndex++;
+        if (currentEnemyIndex < enemies.Length)
+        {
+            enemies[currentEnemyIndex].EnemyMove((Vector2I)player.GlobalPosition);
+        }
+        else
+        {
+            // All enemies have moved, now it's player's turn or some other state
+            PlayerTurnStart();
         }
     }
     public void GameOver()

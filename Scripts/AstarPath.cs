@@ -241,4 +241,11 @@ public partial class AstarPath : Node2D
 			QueueRedraw();
 		}
 	}
+    public void UpdateNonWalkableTiles(IEnumerable<Vector2> additionalNonWalkableTiles)
+    {
+        foreach (Vector2 pos in additionalNonWalkableTiles)
+        {
+            NonWalkableTiles.Add(pos);
+        }
+    }
 }
