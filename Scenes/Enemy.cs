@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class Player : AnimatedSprite2D
+public partial class Enemy : AnimatedSprite2D
 {
-    private int PlayerPathTarget = 1;
+    private int EnemyPathTarget = 1;
     private TileMap WorldTileMap;
     private AstarPath AstarPathFind;
     public bool isMoving = false;
@@ -15,46 +15,38 @@ public partial class Player : AnimatedSprite2D
         AstarPathFind.SetTileMap(WorldTileMap);
     }
 
-    public void PlayerMove()
+    public void EnemyMove(Vector2I playerPosition)
     {
         isMoving = true;
-        Vector2I clickedTile = WorldTileMap.LocalToMap(GetGlobalMousePosition());
-        // Check if the clicked tile is non-walkable
-        if (!AstarPathFind.NonWalkableTiles.Contains(clickedTile))
+        if (AstarPathFind.SetAstarPath(GlobalPosition, playerPosition))
         {
-            if (AstarPathFind.SetAstarPath(GlobalPosition, GetGlobalMousePosition()))
+            // Remove the last node to stop one tile before the player
+            if (AstarPathFind.PathNodeList.Count > 1)
             {
-                PlayerPathTarget = 1;
+                AstarPathFind.PathNodeList.RemoveAt(AstarPathFind.PathNodeList.Count - 1);
             }
-        }
-        else
-        {
-            GD.Print("Clicked on a non-walkable tile.");
+            EnemyPathTarget = 1;
         }
     }
+
     private void WalkPath(double delta)
     {
-        if (PlayerPathTarget < AstarPathFind.PathNodeList.Count)
+        if (EnemyPathTarget < AstarPathFind.PathNodeList.Count)
         {
-            Vector2 targetNode = WorldTileMap.MapToLocal((Vector2I)AstarPathFind.PathNodeList[PlayerPathTarget]);
+            Vector2 targetNode = WorldTileMap.MapToLocal((Vector2I)AstarPathFind.PathNodeList[EnemyPathTarget]);
             Position = Position.MoveToward(targetNode, (float)(150 * delta));
             if (Position == targetNode)
             {
-                PlayerPathTarget++;
+                EnemyPathTarget++;
             }
             //Play("Walk");
         }
         else
         {
             isMoving = false;
-            if (GetParent() is Main main)
-            {
-                main.EnemyTurnStart(); // Call this only when the player has reached the target
-            }
             //Play("Idle");
         }
     }
-
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
